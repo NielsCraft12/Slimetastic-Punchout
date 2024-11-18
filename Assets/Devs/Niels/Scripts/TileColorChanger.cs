@@ -22,4 +22,13 @@ public class TileColorChanger : MonoBehaviour
             renderer.material = materialColor;
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Floor"))
+        {
+            Renderer renderer = other.gameObject.GetComponent<Renderer>();
+            renderer.material = materialColor;
+        }
+    }
 }
