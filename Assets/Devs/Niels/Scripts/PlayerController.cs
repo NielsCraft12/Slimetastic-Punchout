@@ -25,10 +25,14 @@ public class PlayerController : MonoBehaviour
     private InputAction move;
     private InputAction jump;
 
+    private Animator animator;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         playerControls = new PlayerControlls();
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void OnEnable()
@@ -55,6 +59,15 @@ public class PlayerController : MonoBehaviour
         if (moveSpeed < 0)
         {
             moveSpeed = 0;
+        }
+
+        // Animation
+        if (moveDirection != Vector2.zero)
+        {
+            animator.SetTrigger("Walk");
+        }else
+        {
+            animator.SetTrigger("Idle");
         }
     }
 
