@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class GameManager : MonoBehaviour
     private Scene currentScene;
     private string currentSceneName;
 
-    private string activeMenu = "Main Menu"; //activeMenu needs to be the menu you want to be active at the moment
+    private GameObject canvas;
 
     private void Awake()
     {
@@ -27,38 +26,30 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(Instance);
-    }
 
-    private void Update()
-    {
+        canvas = GameObject.Find("Canvas");
+
         currentScene = SceneManager.GetActiveScene();
         currentSceneName = currentScene.name;
 
-        MenuLogic();
-    }
-
-    private void MenuLogic() 
-    {
-        GameObject _canvas = GameObject.Find("Canvas");
-
-        foreach (Transform _child in _canvas.transform)
-        {
-            _child.gameObject.SetActive(false);
-
-            if (_child.gameObject.name == activeMenu)
-            {
-                _child.gameObject.SetActive(true);
-            }
-        }
-    }
-
-    public void ChangeMenu(string _menu)
-    {
-        activeMenu = _menu;
+        
     }
 
     public void ChangeScene(string _scene)
     {
         SceneManager.LoadScene(_scene);
+     
+        currentScene = SceneManager.GetActiveScene();
+        currentSceneName = currentScene.name;
+    }
+
+    public void PlayerJoin()
+    {
+
+    }
+
+    public void PlayerLeave()
+    {
+
     }
 }
