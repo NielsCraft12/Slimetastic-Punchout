@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 5653065208911117069}
   - component: {fileID: 4911687365843982980}
   - component: {fileID: 8101451587032176938}
+  - component: {fileID: 6102820388653831145}
   - component: {fileID: 5663928783947270000}
   - component: {fileID: 1522675461786821962}
   - component: {fileID: 7593979837769627775}
@@ -150,6 +151,18 @@ MonoBehaviour:
   maxSpeed: 15
   rotationSpeed: 10
   jumpForce: 100
+--- !u!114 &6102820388653831145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7263951232624388738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6376a7c28033b44b2f8cc13e2f3845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5663928783947270000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +205,19 @@ MonoBehaviour:
     m_ActionId: a9df047a-655f-4d5e-8e8e-0a95addd52d9
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6102820388653831145}
+        m_TargetAssemblyTypeName: PlayerAttack, Assembly-CSharp
+        m_MethodName: OnPunch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: aad37521-01f0-4133-8a8b-7e70f43789dc
     m_ActionName: Player/Punch[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -828,6 +853,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5653065208911117069}
     m_Modifications:
+    - target: {fileID: 1331488573691988992, guid: f9227234437876747b4f278aa4c779a3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2435998100527416305, guid: f9227234437876747b4f278aa4c779a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.000015258788
@@ -843,6 +872,10 @@ PrefabInstance:
     - target: {fileID: 6227940575709477168, guid: f9227234437876747b4f278aa4c779a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976826509498112266, guid: f9227234437876747b4f278aa4c779a3, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7168139496414056027, guid: f9227234437876747b4f278aa4c779a3, type: 3}
       propertyPath: m_Name
@@ -891,6 +924,14 @@ PrefabInstance:
     - target: {fileID: 7507931898141037793, guid: f9227234437876747b4f278aa4c779a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482733801348714619, guid: f9227234437876747b4f278aa4c779a3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482733801348714619, guid: f9227234437876747b4f278aa4c779a3, type: 3}
+      propertyPath: m_TagString
+      value: Glove
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

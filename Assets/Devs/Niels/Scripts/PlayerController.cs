@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private float jumpForce;
 
     private Vector2 moveDirection = Vector2.zero;
-    private Vector2 lastMoveDirection = Vector2.zero;
+    public Vector2 lastMoveDirection = Vector2.zero;
     private bool isGrounded = true;
 
     private Animator animator;
