@@ -30,6 +30,8 @@ public class MenuPlayer : MonoBehaviour
     [SerializeField]
     private List<GameObject> Locks = new List<GameObject>();
 
+    public bool isReady;
+
     private void Awake()
     {
         menuManager = GameObject.Find("Menu Manager").GetComponent<MenuManager>();
@@ -40,18 +42,14 @@ public class MenuPlayer : MonoBehaviour
 
         foreach (Transform playerMenuChilds in menuManager.playerSelections[0].transform)
         {
-            if (
-                playerMenuChilds.gameObject.name == "Cosmetic Selection"
+            if (playerMenuChilds.gameObject.name == "Cosmetic Selection"
                 || playerMenuChilds.gameObject.name == "Color Selection"
-                || playerMenuChilds.gameObject.name == "Ready Selection"
-            )
+                || playerMenuChilds.gameObject.name == "Ready Selection")
             {
                 PlayerMenuChilds.Add(playerMenuChilds.gameObject);
             }
-            else if (
-                playerMenuChilds.gameObject.name == "Cosmatic Image"
-                || playerMenuChilds.gameObject.name == "Color Image"
-            )
+            else if (playerMenuChilds.gameObject.name == "Cosmatic Image"
+                || playerMenuChilds.gameObject.name == "Color Image")
             {
                 images.Add(playerMenuChilds.gameObject);
             }
@@ -71,10 +69,7 @@ public class MenuPlayer : MonoBehaviour
         }
 
         menuManager.playerSelections.RemoveAt(0);
-        rectTransform.localPosition = GameObject
-            .Find("Cosmetic Selection")
-            .GetComponent<RectTransform>()
-            .localPosition;
+        rectTransform.localPosition = GameObject.Find("Cosmetic Selection").GetComponent<RectTransform>().localPosition;
 
         menuManager.takenColors.Add(
             new ColorTracker { PlayerName = transform.parent.name, Color = colorSelected }
@@ -84,6 +79,8 @@ public class MenuPlayer : MonoBehaviour
         images[1].GetComponent<Image>().color = menuManager.colors[colorSelected];
         Outline.GetComponent<Image>().color = menuManager.colors[colorSelected];
         playerIcon.GetComponent<Image>().color = menuManager.colors[colorSelected];
+
+        menuManager.GetPlayers();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -98,6 +95,18 @@ public class MenuPlayer : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         collision.GetComponent<Image>().color = Color.white;
+    }
+
+    public void Select(InputAction.CallbackContext context)
+    {
+        if (selected == 2 && isReady == false)
+        {
+            isReady = true;
+        }
+        else if (selected == 2 && isReady == true)
+        {
+            isReady = false;
+        }
     }
 
     public void NavigateMenu(InputAction.CallbackContext context)

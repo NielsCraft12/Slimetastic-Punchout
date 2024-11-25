@@ -22,6 +22,7 @@ public class MenuManager : MonoBehaviour
 
 
     public List<GameObject> menuSelections = new List<GameObject>();
+    public MenuPlayer[] menuPlayers;
 
 
 
@@ -43,5 +44,25 @@ public class MenuManager : MonoBehaviour
             Color.yellow,
             Color.black
         };
+    }
+
+    public void GetPlayers()
+    {
+        menuPlayers = GameObject.FindObjectsOfType<MenuPlayer>();
+
+    }
+
+    private void Update()
+    {
+
+        bool canStart = true;
+
+        for (int i = 0; i < menuPlayers.Length; i++)
+        {
+            if (menuPlayers[i].isReady == false)
+            {
+                canStart = false;
+            }
+        }
     }
 }
