@@ -52,7 +52,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMenuChilds: []
+  images: []
   selected: 0
+  colorSelected: -1
+  cosmeticSelected: 0
+  Locks: []
 --- !u!114 &4475766848417733652
 MonoBehaviour:
   m_ObjectHideFlags: 0
