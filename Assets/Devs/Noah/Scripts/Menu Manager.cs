@@ -2,32 +2,46 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
+
+    [SerializeField]
+    public List<GameObject> Cosmetics = new List<GameObject>();
+
+    [SerializeField]
+    public List<Color> colors = new List<Color>();
+
+    public List<ColorTracker> takenColors = new List<ColorTracker>();
+
     public List<GameObject> playerSelections = new List<GameObject>();
-    [SerializeField] private GameObject playerSelect;
+    [SerializeField]
+    private GameObject playerSelect;
+    private MenuPlayer menuPlayer;
+    public List<GameObject> playerSelectors = new List<GameObject>();
+
 
     public List<GameObject> menuSelections = new List<GameObject>();
+
 
 
     private void Awake()
     {
         playerSelect = GameObject.Find("Player Select");
-
         for (int i = 1; i <= 4; i++)
         {
-          GameObject playerMenu = GameObject.Find("Player " + i);
+            GameObject playerMenu = GameObject.Find("Player " + i);
             playerSelections.Add(playerMenu);
+
         }
 
-
-    }
-
-    public void OnPlayerJoined(PlayerInput playerInput)
-    {
-        Debug.Log($"Player {playerInput.playerIndex} joined with device: {playerInput.devices[0].name}");
-        // Additional setup for the player (e.g., camera or UI).
+        colors = new List<Color>
+        {
+            Color.red,
+            Color.blue,
+            Color.green,
+            Color.yellow,
+            Color.black
+        };
     }
 }
