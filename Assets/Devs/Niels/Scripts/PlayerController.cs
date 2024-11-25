@@ -18,42 +18,20 @@ public class PlayerController : MonoBehaviour
     private float jumpForce;
 
     private Vector2 moveDirection = Vector2.zero;
-    private Vector2 lastMoveDirection = Vector2.zero;
+    public Vector2 lastMoveDirection = Vector2.zero;
     private bool isGrounded = true;
-
-    private PlayerControlls playerControls;
-    private InputAction move;
-    private InputAction jump;
 
     private Animator animator;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        playerControls = new PlayerControlls();
 
         animator = GetComponentInChildren<Animator>();
     }
 
-    private void OnEnable()
-    {
-        move = playerControls.Player.Move;
-        move.Enable();
-
-        jump = playerControls.Player.Jump;
-        jump.Enable();
-        jump.performed += OnJump;
-    }
-
-    private void OnDisable()
-    {
-        move.Disable();
-        jump.Disable();
-    }
-
     void Update()
     {
-        moveDirection = move.ReadValue<Vector2>();
         LookAt();
 
         if (moveSpeed < 0)
@@ -100,18 +78,26 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-    private void OnJump(InputAction.CallbackContext context)
+    public void OnJump(InputAction.CallbackContext _context)
     {
-        if (isGrounded)
+        if (isGrounded && _context.performed)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
     }
 
+    public void OnMove(InputAction.CallbackContext _context)
+    {
+        moveDirection = _context.ReadValue<Vector2>();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        isGrounded = true;
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            isGrounded = true;
+        }
     }
 
     private void LookAt()
@@ -119,7 +105,7 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = rb.velocity;
         direction.y = 0f;
 
-        if (move.ReadValue<Vector2>().sqrMagnitude > 0.1f && direction.sqrMagnitude > 0.1f)
+        if (moveDirection.sqrMagnitude > 0.1f && direction.sqrMagnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
             rb.rotation = Quaternion.Slerp(
