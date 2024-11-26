@@ -20,7 +20,7 @@ public class TileCreator : MonoBehaviour
         {
             for (int j = 0; j < mapSize; j++)
             {
-                Instantiate(tile, new Vector3(groundTileChild.position.x + i * 6, 0, groundTileChild.position.z + j * 6), Quaternion.identity, this.transform);
+                Instantiate(tile, new Vector3(groundTileChild.position.x + i * 2, 0, groundTileChild.position.z + j * 2), Quaternion.identity, this.transform);
             }
         }
     }
