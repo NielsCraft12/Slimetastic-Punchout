@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
 
     [SerializeField]
-    public List<GameObject> Cosmetics = new List<GameObject>();
+    public List<Sprite> Cosmetics = new List<Sprite>();
 
     [SerializeField]
     public List<Color> colors = new List<Color>();
@@ -27,8 +26,6 @@ public class MenuManager : MonoBehaviour
 
     public List<GameObject> menuSelections = new List<GameObject>();
     public MenuPlayer[] menuPlayers;
-
-
 
 
 
@@ -65,8 +62,6 @@ public class MenuManager : MonoBehaviour
          // Yellow
          new Color(231 / 255.0f, 216 / 255.0f, 20 / 255.0f, 1)
         };
-
-
     }
 
     public void GetPlayers()
