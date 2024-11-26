@@ -48,9 +48,6 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log(playerController.lastMoveDirection);
-        
     }
 
     public void OnPunch(InputAction.CallbackContext _context) // The punch input
