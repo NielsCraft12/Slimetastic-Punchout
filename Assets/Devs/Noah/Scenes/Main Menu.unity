@@ -233,7 +233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 95.900024, y: 2.5}
+  m_AnchoredPosition: {x: 92.1, y: 2.5}
   m_SizeDelta: {x: 56.9827, y: 56.9827}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &35860276
@@ -2439,7 +2439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7263951232624388738, guid: b00c92abd18f65d4db731aaebac48aa5, type: 3}
       propertyPath: m_Name
-      value: Player1
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7263951232624388738, guid: b00c92abd18f65d4db731aaebac48aa5, type: 3}
       propertyPath: m_IsActive
@@ -2507,8 +2507,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000087023, y: -15}
-  m_SizeDelta: {x: 57.2631, y: 57.2631}
+  m_AnchoredPosition: {x: -0.000025988, y: -12.3}
+  m_SizeDelta: {x: 121.9781, y: 121.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &514660287
 MonoBehaviour:
@@ -2530,7 +2530,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 243c8918ab38a5741ac601d0d4bb19c3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9773,8 +9773,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44656071b38894241887a326ac043c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cosmetics: []
+  Cosmetics:
+  - {fileID: 21300000, guid: 8e77ab748df2b7c4b8a3265350810839, type: 3}
+  - {fileID: 21300000, guid: c79ca03eda3a45a4e9c44a0d31a87a95, type: 3}
+  - {fileID: 21300000, guid: 3a6f627686ffb6c43a3a67871ef2db12, type: 3}
+  - {fileID: 21300000, guid: 3427c96e0d8018c40a5c0d03a09a54dc, type: 3}
+  - {fileID: 21300000, guid: 16819285fb3fb2442bd0fdab4be338eb, type: 3}
+  - {fileID: 21300000, guid: 94c9f275494f6c94fa24e67a985d596e, type: 3}
+  - {fileID: 21300000, guid: 039581fd47604f54890eade873ca2785, type: 3}
+  - {fileID: 21300000, guid: 243c8918ab38a5741ac601d0d4bb19c3, type: 3}
   colors: []
+  playerColors:
+  - {fileID: 2100000, guid: 05d08caa31b3f8d408be212338b10790, type: 2}
+  - {fileID: 2100000, guid: c62fabcf8da4d674a8996a187f29399f, type: 2}
+  - {fileID: 2100000, guid: 8ffce0545181a544cadb3ff7ba4702de, type: 2}
+  - {fileID: 2100000, guid: d264f9effcd8ed94fb1330c71db17191, type: 2}
+  - {fileID: 2100000, guid: 82d620c021126584f8b8351773f6978e, type: 2}
+  - {fileID: 2100000, guid: eaf24d216072603469a40448cf281698, type: 2}
+  - {fileID: 2100000, guid: a1477427bde813b4ab927cabd78c35f5, type: 2}
+  - {fileID: 2100000, guid: 621f143855474ea43852e27667af19f6, type: 2}
+  - {fileID: 2100000, guid: 0421b466400b079469a3340b5a738343, type: 2}
+  - {fileID: 2100000, guid: cae856b5ec6f6d046899315395eaf69a, type: 2}
   takenColors: []
   playerSelections: []
   playerSelect: {fileID: 0}
