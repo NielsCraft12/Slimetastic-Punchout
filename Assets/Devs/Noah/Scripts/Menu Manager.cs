@@ -54,15 +54,23 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-
-        bool canStart = true;
-
-        for (int i = 0; i < menuPlayers.Length; i++)
+        if (menuPlayers.Length > 1)
         {
-            if (menuPlayers[i].isReady == false)
+            bool canStart = true;
+
+            for (int i = 0; i < menuPlayers.Length; i++)
             {
-                canStart = false;
+                if (menuPlayers[i].isReady == false)
+                {
+                    canStart = false;
+                }
+            }
+
+            if (canStart == true)
+            {
+                Debug.Log("iedereen ready");
             }
         }
     }
+
 }
