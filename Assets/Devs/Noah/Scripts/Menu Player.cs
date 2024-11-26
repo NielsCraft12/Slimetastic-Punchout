@@ -30,6 +30,15 @@ public class MenuPlayer : MonoBehaviour
     [SerializeField]
     private List<GameObject> Locks = new List<GameObject>();
 
+    private GameObject player;
+    private GameObject cosmeticParent;
+    private List<GameObject> playerChilds;
+
+    [SerializeField]
+    private GameObject PlayerBody;
+    [SerializeField]
+    private GameObject PlayerEyes;
+
     public bool isReady;
 
     private void Awake()
@@ -66,8 +75,60 @@ public class MenuPlayer : MonoBehaviour
                 playerMenuChilds.gameObject.GetComponent<Image>().enabled = false;
                 Locks.Add(playerMenuChilds.gameObject);
             }
-        }
+            else if (playerMenuChilds.gameObject.name == "Player")
+            {
+                player = playerMenuChilds.gameObject;
+            }
 
+        }
+        foreach (Transform child in player.transform)
+        {
+
+            if (child.gameObject.name == "Cosmetic Parent")
+            {
+                cosmeticParent = child.gameObject;
+            }
+
+            // Check for "P_Red Slime"
+            if (child.gameObject.name == "P_Red Slime")
+            {
+                //Debug.Log("Found P_Red Slime");
+
+                foreach (Transform subChild in child)
+                {
+                    //  Debug.Log($"Checking child of P_Red Slime: {subChild.gameObject.name}");
+
+                    if (subChild.gameObject.name == "Body")
+                    {
+                        //    Debug.Log("Found Body");
+                        foreach (Transform childBody in subChild)
+                        {
+                            //     Debug.Log($"Checking child of Body: {childBody.name}");
+                            if (childBody.name == "Slime Model")
+                            {
+                                PlayerBody = childBody.gameObject;
+                                //      Debug.Log("Slime Model found and assigned!");
+                            }
+                        }
+                    }
+
+                    if (subChild.gameObject.name == "Eyes")
+                    {
+                        //  Debug.Log("Found Eyes");
+                        foreach (Transform childEyes in subChild)
+                        {
+                            //    Debug.Log($"Checking child of Eyes: {childEyes.name}");
+                            if (childEyes.name == "Slime Eyes")
+                            {
+                                PlayerEyes = childEyes.gameObject;
+                                //        Debug.Log("Slime Eyes found and assigned!");
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
         menuManager.playerSelections.RemoveAt(0);
         rectTransform.localPosition = GameObject.Find("Cosmetic Selection").GetComponent<RectTransform>().localPosition;
 
@@ -79,6 +140,8 @@ public class MenuPlayer : MonoBehaviour
         images[1].GetComponent<Image>().color = menuManager.colors[colorSelected];
         Outline.GetComponent<Image>().color = menuManager.colors[colorSelected];
         playerIcon.GetComponent<Image>().color = menuManager.colors[colorSelected];
+        PlayerBody.GetComponent<Renderer>().material = menuManager.playerColors[colorSelected];
+        PlayerEyes.GetComponent<Renderer>().material = menuManager.playerColors[colorSelected];
 
         menuManager.GetPlayers();
     }
@@ -165,6 +228,15 @@ public class MenuPlayer : MonoBehaviour
             {
                 cosmeticSelected--;
             }
+
+            if (cosmeticSelected > menuManager.Cosmetics.Count - 1)
+            {
+                cosmeticSelected = 0;
+            }
+            else if (cosmeticSelected < 0)
+            {
+                cosmeticSelected = menuManager.Cosmetics.Count - 1;
+            }
         }
         else if (selected == 1)
         {
@@ -194,9 +266,58 @@ public class MenuPlayer : MonoBehaviour
             PlayerMenuChilds[selected].GetComponent<Image>().color = menuManager.colors[
                 colorSelected
             ];
-            Outline.GetComponent<Image>().color = menuManager.colors[colorSelected];
-            playerIcon.GetComponent<Image>().color = menuManager.colors[colorSelected];
-            images[1].GetComponent<Image>().color = menuManager.colors[colorSelected];
+
+
+            if (selected == 1)
+            {
+
+                Outline.GetComponent<Image>().color = menuManager.colors[colorSelected];
+                playerIcon.GetComponent<Image>().color = menuManager.colors[colorSelected];
+                images[1].GetComponent<Image>().color = menuManager.colors[colorSelected];
+                PlayerBody.GetComponent<Renderer>().material = menuManager.playerColors[colorSelected];
+                PlayerEyes.GetComponent<Renderer>().material = menuManager.playerColors[colorSelected];
+            }
+        }
+
+        if (selected == 0)
+        {
+            images[0].GetComponent<Image>().sprite = menuManager.Cosmetics[cosmeticSelected];
+            PlayerCosmetics playerCosmetics = cosmeticParent.GetComponent<PlayerCosmetics>();
+            switch (cosmeticSelected)
+            {
+                case 0:
+                    playerCosmetics.cosmetic = PlayerCosmetics.Cosmetics.None;
+                    break;
+                case 1:
+                    playerCosmetics.cosmetic = PlayerCosmetics.Cosmetics.Axe;
+                    break;
+                case 2:
+                    playerCosmetics.cosmetic = PlayerCosmetics.Cosmetics.Fez;
+                    break;
+                case 3:
+                    playerCosmetics.cosmetic = PlayerCosmetics.Cosmetics.Halo;
+                    break;
+                case 4:
+                    playerCosmetics.cosmetic = PlayerCosmetics.Cosmetics.PartyHat;
+                    break;
+                case 5:
+                    playerCosmetics.cosmetic = PlayerCosmetics.Cosmetics.TopHatHorns;
+                    break;
+                case 6:
+                    playerCosmetics.cosmetic = PlayerCosmetics.Cosmetics.TopHat;
+                    break;
+                case 7:
+                    playerCosmetics.cosmetic = PlayerCosmetics.Cosmetics.TrafficCone;
+                    break;
+                case 8:
+                    playerCosmetics.cosmetic = PlayerCosmetics.Cosmetics.Bootleg;
+                    break;
+
+
+                default:
+                    Debug.LogError("Fuck My life!!!!");
+                    break;
+            }
         }
     }
 

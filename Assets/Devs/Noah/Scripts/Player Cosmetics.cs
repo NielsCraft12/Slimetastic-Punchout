@@ -8,15 +8,20 @@ public class PlayerCosmetics : MonoBehaviour
 {
     [SerializeField] private List<GameObject> cosmeticModels = new List<GameObject>(); // The list where all the cosmetic models will be in
 
-    private enum Cosmetics
+    public enum Cosmetics
     {
         None,
-        Cube,
-        BEAN,
-        Bootleg,
+        Axe,
+        Fez,
+        Halo,
+        PartyHat,
+        TopHatHorns,
+        TopHat,
+        TrafficCone,
+        Bootleg
     }
 
-    [SerializeField] private Cosmetics cosmetic;
+    [SerializeField] public Cosmetics cosmetic;
 
     private void Start()
     {
@@ -36,14 +41,29 @@ public class PlayerCosmetics : MonoBehaviour
                 SetCosmetic("None");
                 break;
 
-            case Cosmetics.Cube:
+            case Cosmetics.Axe:
                 SetCosmetic("Cube");
                 break;
 
-            case Cosmetics.BEAN:
+            case Cosmetics.Fez:
                 SetCosmetic("BEAN");
                 break;
 
+            case Cosmetics.Halo:
+                SetCosmetic("Halo");
+                break;
+            case Cosmetics.PartyHat:
+                SetCosmetic("PartyHat");
+                break;
+            case Cosmetics.TopHatHorns:
+                SetCosmetic("TopHatHorns");
+                break;
+            case Cosmetics.TopHat:
+                SetCosmetic("TopHat");
+                break;
+            case Cosmetics.TrafficCone:
+                SetCosmetic("TrafficCone");
+                break;
             case Cosmetics.Bootleg:
                 SetCosmetic("Bootleg");
                 break;
