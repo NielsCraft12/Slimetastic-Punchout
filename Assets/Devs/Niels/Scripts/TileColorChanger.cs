@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class TileColorChanger : MonoBehaviour
@@ -8,27 +9,29 @@ public class TileColorChanger : MonoBehaviour
     [SerializeField]
     Material materialColor;
 
-    // Start is called before the first frame update
-    void Start() { }
-
-    // Update is called once per frame
-    void Update() { }
-
-    private void OnCollisionEnter(Collision collision)
+    private enum PlayerColors
     {
-        if (collision.gameObject.CompareTag("Floor"))
-        {
-            Renderer renderer = collision.gameObject.GetComponent<Renderer>();
-            renderer.material = materialColor;
-        }
+        Red,
+        Blue,
+        Green,
+        Yellow,
+        Black
     }
+
+    [SerializeField] PlayerColors playerColor;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Floor"))
         {
-            Renderer renderer = other.gameObject.GetComponent<Renderer>();
-            renderer.material = materialColor;
+            foreach(Transform child in other.gameObject.transform)
+            {
+                if (child.gameObject.name == "Tile Color")
+                {
+                    Renderer renderer = child.gameObject.GetComponent<Renderer>();
+                    renderer.material = materialColor;
+                }
+            }
         }
     }
 }

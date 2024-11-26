@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   materialColor: {fileID: 2100000, guid: 623709920a6545c4fb52ad3c692adfdc, type: 2}
+  playerColor: 0
 --- !u!114 &8101451587032176938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,9 +149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  maxSpeed: 15
+  maxSpeed: 20
   rotationSpeed: 10
   jumpForce: 100
+  lastMoveDirection: {x: 0, y: 0}
 --- !u!114 &6102820388653831145
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,18 +7,21 @@ public class TileCreator : MonoBehaviour
     [SerializeField]
     GameObject tile;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    private int mapSize = 25;
+
+    private Transform groundTileChild;
+
     void Start()
     {
-        for (int i = 0; i < 50; i++)
+        groundTileChild = GetComponentInChildren<Transform>();
+
+        for (int i = 0; i < mapSize; i++)
         {
-            for (int j = 0; j < 50; j++)
+            for (int j = 0; j < mapSize; j++)
             {
-                Instantiate(tile, new Vector3(i, 0, j), Quaternion.identity, this.transform);
+                Instantiate(tile, new Vector3(groundTileChild.position.x + i * 6, 0, groundTileChild.position.z + j * 6), Quaternion.identity, this.transform);
             }
         }
     }
-
-    // Update is called once per frame
-    void Update() { }
 }
