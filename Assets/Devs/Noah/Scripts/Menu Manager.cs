@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
@@ -26,11 +27,18 @@ public class MenuManager : MonoBehaviour
 
     public List<GameObject> menuSelections = new List<GameObject>();
     public MenuPlayer[] menuPlayers;
+    [SerializeField]
+    public GameObject playersParent;
+    [SerializeField]
+    private List<GameObject> playerSpawns = new List<GameObject>();
+    public List<GameObject> slimes = new List<GameObject>();
 
 
 
     private void Awake()
     {
+
+
         playerSelect = GameObject.Find("Player Select");
         for (int i = 1; i <= 4; i++)
         {
@@ -62,6 +70,9 @@ public class MenuManager : MonoBehaviour
          // Yellow
          new Color(231 / 255.0f, 216 / 255.0f, 20 / 255.0f, 1)
         };
+
+        // Initialize menuPlayers
+        GetPlayers();
     }
 
     public void GetPlayers()
@@ -72,13 +83,13 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-        if (menuPlayers.Length > 1)
+        if (menuPlayers != null && menuPlayers.Length > 1)
         {
             bool canStart = true;
 
             for (int i = 0; i < menuPlayers.Length; i++)
             {
-                if (menuPlayers[i].isReady == false)
+                if (menuPlayers[i] != null && menuPlayers[i].isReady == false)
                 {
                     canStart = false;
                 }
@@ -86,7 +97,23 @@ public class MenuManager : MonoBehaviour
 
             if (canStart == true)
             {
-                Debug.Log("iedereen ready");
+                canStart = false;
+                foreach (GameObject players in playerSelectors)
+                {
+                    // Set the parent of the player selector to playersParent
+                    players.GetComponent<MenuPlayer>().enabled = false;
+                    players.GetComponent<PlayerInput>().enabled = false;
+                    players.GetComponent<BoxCollider2D>().enabled = false;
+
+
+                }
+                for (int i = slimes.Count - 1; i >= 0; i--)
+                {
+
+                    slimes[i].transform.position = playerSpawns[i].transform.position;
+                }
+                GameObject.Find("Canvas").SetActive(false);
+                gameObject.SetActive(false);
             }
         }
     }

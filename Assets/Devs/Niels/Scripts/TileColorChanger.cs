@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class TileColorChanger : MonoBehaviour
 {
-    private GameObject playerBody;
-
-    private GameObject playerEyes;
+    [SerializeField] private GameObject playerBody;
+    [SerializeField] private GameObject playerEyes;
 
     [SerializeField] int colorSelected = 0;
 
@@ -14,7 +16,7 @@ public class TileColorChanger : MonoBehaviour
 
     public List<Material> playerColors = new List<Material>();
     private void Awake()
-    {   
+    {
         playerBody = transform.GetChild(1).transform.GetChild(0).transform.GetChild(1).gameObject;
         playerEyes = transform.GetChild(1).transform.GetChild(1).transform.GetChild(1).gameObject;
 
@@ -45,6 +47,11 @@ public class TileColorChanger : MonoBehaviour
 
     private void Update()
     {
+        if (playerBody == null || playerEyes == null)
+        {
+            playerBody = transform.GetChild(1).transform.GetChild(0).transform.GetChild(1).gameObject;
+            playerEyes = transform.GetChild(1).transform.GetChild(1).transform.GetChild(1).gameObject;
+        }
         playerBody.GetComponent<Renderer>().material = playerColors[colorSelected];
         playerEyes.GetComponent<Renderer>().material = playerColors[colorSelected];
     }
@@ -53,7 +60,7 @@ public class TileColorChanger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Floor"))
         {
-            foreach(Transform child in other.gameObject.transform)
+            foreach (Transform child in other.gameObject.transform)
             {
                 if (child.gameObject.name == "Tile Color")
                 {

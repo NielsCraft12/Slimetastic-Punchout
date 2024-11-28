@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -44,52 +45,78 @@ public class MenuPlayer : MonoBehaviour
 
     private void Awake()
     {
-        // Initialize menuManager and rectTransform
+        // Initialize components and setup the player menu
+        InitializeComponents();
+        AssignPlayerMenuChildren();
+        AssignPlayerComponents();
+        InitializePlayerSelection();
+        InitializeColorSelection();
+        UpdateUI();
+    }
+
+    private void InitializeComponents()
+    {
+        // Find and assign the MenuManager and RectTransform components
         menuManager = GameObject.Find("Menu Manager").GetComponent<MenuManager>();
         rectTransform = GetComponent<RectTransform>();
-
-        // Add this player selector to the menu manager
+        // Add this player selector to the MenuManager
         menuManager.playerSelectors.Add(this.gameObject);
+        // Set the parent of this transform to the first player selection
         transform.SetParent(menuManager.playerSelections[0].transform, false);
 
-        // Iterate through player menu children and assign them to appropriate lists or variables
-        foreach (Transform playerMenuChilds in menuManager.playerSelections[0].transform)
+        menuManager.slimes.Add(transform.GetChild(0).gameObject);
+        // transform.GetChild(0).GetComponent<PlayerInput>().enabled = false;
+        // transform.GetChild(0).GetComponent<TileColorChanger>().enabled = false;
+        // transform.GetChild(0).GetComponent<PlayerController>().enabled = false;
+        // transform.GetChild(0).GetComponent<PlayerAttack>().enabled = false;
+        transform.GetChild(0).transform.SetParent(menuManager.playersParent.transform, false);
+
+        // Add debug logs
+        Debug.Log("Initialized components for MenuPlayer");
+    }
+
+    private void AssignPlayerMenuChildren()
+    {
+        // Iterate through the player menu children and assign them to appropriate lists or variables
+        foreach (Transform playerMenuChild in menuManager.playerSelections[0].transform)
         {
-            switch (playerMenuChilds.gameObject.name)
+            switch (playerMenuChild.gameObject.name)
             {
                 case "Cosmetic Selection":
                 case "Color Selection":
                 case "Ready Selection":
-                    PlayerMenuChilds.Add(playerMenuChilds.gameObject);
+                    PlayerMenuChilds.Add(playerMenuChild.gameObject);
                     break;
                 case "Cosmatic Image":
                 case "Color Image":
-                    images.Add(playerMenuChilds.gameObject);
+                    images.Add(playerMenuChild.gameObject);
                     break;
                 case "Outline":
-                    Outline = playerMenuChilds.gameObject;
+                    Outline = playerMenuChild.gameObject;
                     break;
                 case "Player Icon":
-                    playerIcon = playerMenuChilds.gameObject;
+                    playerIcon = playerMenuChild.gameObject;
                     break;
                 case "Lock":
-                    playerMenuChilds.gameObject.GetComponent<Image>().enabled = false;
-                    Locks.Add(playerMenuChilds.gameObject);
+                    playerMenuChild.gameObject.GetComponent<Image>().enabled = false;
+                    Locks.Add(playerMenuChild.gameObject);
                     break;
                 case "Ready":
-                    ReadyText = playerMenuChilds.GetComponent<TextMeshProUGUI>();
+                    ReadyText = playerMenuChild.GetComponent<TextMeshProUGUI>();
                     ReadyText.text = "Not Ready...";
                     break;
             }
 
             // Assign player object based on parent name
-            if (playerMenuChilds.gameObject.name == "Player" + transform.parent.name)
+            if (playerMenuChild.gameObject.name == "Player" + transform.parent.name)
             {
-                player = playerMenuChilds.gameObject;
-
+                player = playerMenuChild.gameObject;
             }
         }
+    }
 
+    private void AssignPlayerComponents()
+    {
         // Find and assign cosmetic parent, player body, and player eyes
         foreach (Transform child in player.transform)
         {
@@ -100,45 +127,48 @@ public class MenuPlayer : MonoBehaviour
 
             if (child.gameObject.name == "P_Red Slime")
             {
-                foreach (Transform subChild in child)
-                {
-                    if (subChild.gameObject.name == "Body")
-                    {
-                        foreach (Transform childBody in subChild)
-                        {
-                            if (childBody.name == "Slime Model")
-                            {
-                                PlayerBody = childBody.gameObject;
-                            }
-                        }
-                    }
-
-                    if (subChild.gameObject.name == "Eyes")
-                    {
-                        foreach (Transform childEyes in subChild)
-                        {
-                            if (childEyes.name == "Slime Eyes")
-                            {
-                                PlayerEyes = childEyes.gameObject;
-                            }
-                        }
-                    }
-                }
+                AssignSlimeComponents(child);
             }
         }
+    }
 
+    private void AssignSlimeComponents(Transform slimeTransform)
+    {
+        // Assign the body and eyes of the slime
+        foreach (Transform subChild in slimeTransform)
+        {
+            if (subChild.gameObject.name == "Body")
+            {
+                PlayerBody = subChild.Find("Slime Model").gameObject;
+            }
+
+            if (subChild.gameObject.name == "Eyes")
+            {
+                PlayerEyes = subChild.Find("Slime Eyes").gameObject;
+            }
+        }
+    }
+
+    private void InitializePlayerSelection()
+    {
         // Remove the first player selection and set initial position
         menuManager.playerSelections.RemoveAt(0);
         rectTransform.localPosition = GameObject.Find("Cosmetic Selection").GetComponent<RectTransform>().localPosition;
+    }
 
+    private void InitializeColorSelection()
+    {
         // Add initial color to taken colors and update UI
         menuManager.takenColors.Add(new ColorTracker { PlayerName = transform.parent.name, Color = colorSelected });
         ChooseColor();
+    }
 
+    private void UpdateUI()
+    {
+        // Update the color and cosmetic selection, and set the ready text
         UpdateColor();
         menuManager.GetPlayers();
         UpdateCosmetic();
-
         ReadyText.text = "Not Ready...";
         ReadyText.color = Color.red;
     }
@@ -366,4 +396,11 @@ public class MenuPlayer : MonoBehaviour
         ReadyText.text = "Not Ready...";
         ReadyText.color = Color.red;
     }
+
+
+
+
+
+
+
 }
