@@ -141,8 +141,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef0ffc92dae1b954aae2ddc0b96a6f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  materialColor: {fileID: 2100000, guid: 623709920a6545c4fb52ad3c692adfdc, type: 2}
-  playerColor: 0
+  colorSelected: 0
+  colors: []
+  playerColors:
+  - {fileID: 2100000, guid: 05d08caa31b3f8d408be212338b10790, type: 2}
+  - {fileID: 2100000, guid: c62fabcf8da4d674a8996a187f29399f, type: 2}
+  - {fileID: 2100000, guid: 8ffce0545181a544cadb3ff7ba4702de, type: 2}
+  - {fileID: 2100000, guid: b26f0ad54c05bfa4dbbf50f23b4ac7b8, type: 2}
+  - {fileID: 2100000, guid: 82d620c021126584f8b8351773f6978e, type: 2}
+  - {fileID: 2100000, guid: eaf24d216072603469a40448cf281698, type: 2}
+  - {fileID: 2100000, guid: a1477427bde813b4ab927cabd78c35f5, type: 2}
+  - {fileID: 2100000, guid: 621f143855474ea43852e27667af19f6, type: 2}
+  - {fileID: 2100000, guid: a88a96b3e052cac48acd678e208bf8dd, type: 2}
+  - {fileID: 2100000, guid: cae856b5ec6f6d046899315395eaf69a, type: 2}
 --- !u!114 &8101451587032176938
 MonoBehaviour:
   m_ObjectHideFlags: 0

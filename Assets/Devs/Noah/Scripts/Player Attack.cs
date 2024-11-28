@@ -8,7 +8,8 @@ using UnityEngine.Rendering;
 public class PlayerAttack : MonoBehaviour
 {
     private float playerSize;
-    private float knockbackStrength = 150f;
+    private float knockbackStrength = 1000f;
+
     private float cooldown = 0;
     private float cooldownValue = 1;
     private float punchLength = 5f;
@@ -19,6 +20,8 @@ public class PlayerAttack : MonoBehaviour
     private Rigidbody rb;
 
     private PlayerController playerController;
+
+    private Vector3 hitDirection;
 
     private void Awake()
     {
@@ -44,7 +47,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
-                    hit.rigidbody.AddForce(new Vector3(playerController.lastMoveDirection.x * knockbackStrength, 0f, playerController.lastMoveDirection.y * knockbackStrength) , ForceMode.Impulse);
+                    hit.rigidbody.AddForce(hitDirection * knockbackStrength, ForceMode.Impulse);
                 }
             }
         }
@@ -57,6 +60,7 @@ public class PlayerAttack : MonoBehaviour
             animator.SetTrigger("Punch");
             cooldown = cooldownValue;
             punchDamageCooldown = punchDamageCooldownValue;
+            hitDirection = new Vector3(playerController.lastMoveDirection.x, 0f, playerController.lastMoveDirection.y);
         }
     }
 }
