@@ -92,7 +92,7 @@ public class MenuManager : MonoBehaviour
     private void Update()
     {
         // Only proceed if there are at least 2 players
-        if (menuPlayers != null && menuPlayers.Length > 1)
+        if (menuPlayers != null && menuPlayers.Length > 0)
         {
             bool canStart = true;
 
