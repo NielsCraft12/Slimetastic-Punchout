@@ -161,7 +161,7 @@ public partial class @UIControls: IInputActionCollection2, IDisposable
                     ""name"": ""2D Vector"",
                     ""id"": ""152f8ad3-c4f3-4eee-985e-fbf92427fde5"",
                     ""path"": ""2DVector"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",

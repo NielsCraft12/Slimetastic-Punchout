@@ -42,27 +42,27 @@ public class PlayerCosmetics : MonoBehaviour
                 break;
 
             case Cosmetics.Axe:
-                SetCosmetic("Cube");
+                SetCosmetic("P_Hand Axe");
                 break;
 
             case Cosmetics.Fez:
-                SetCosmetic("BEAN");
+                SetCosmetic("P_Fez");
                 break;
 
             case Cosmetics.Halo:
-                SetCosmetic("Halo");
+                SetCosmetic("P_Halo");
                 break;
             case Cosmetics.PartyHat:
-                SetCosmetic("PartyHat");
+                SetCosmetic("P_Party hat");
                 break;
             case Cosmetics.TopHatHorns:
-                SetCosmetic("TopHatHorns");
+                SetCosmetic("P_Top hat with horns");
                 break;
             case Cosmetics.TopHat:
-                SetCosmetic("TopHat");
+                SetCosmetic("P_Top Hat");
                 break;
             case Cosmetics.TrafficCone:
-                SetCosmetic("TrafficCone");
+                SetCosmetic("P_Traffic cone");
                 break;
             case Cosmetics.Bootleg:
                 SetCosmetic("Bootleg");
