@@ -141,6 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef0ffc92dae1b954aae2ddc0b96a6f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBody: {fileID: 0}
+  playerEyes: {fileID: 0}
   colorSelected: 0
   colors: []
   playerColors:
