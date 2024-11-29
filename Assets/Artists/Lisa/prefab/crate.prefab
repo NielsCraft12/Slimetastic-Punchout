@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 2186263700165122746}
   - component: {fileID: 8475112749453579703}
   - component: {fileID: 6341354587242053597}
+  - component: {fileID: 9138670423144987398}
   m_Layer: 0
   m_Name: cros_low
   m_TagString: Untagged
@@ -199,3 +200,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &9138670423144987398
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8907600695054317372}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.010571084, y: 0.01056097, z: 0.01015579}
+  m_Center: {x: 0.000010235701, y: 0.006150832, z: -0.00012055526}
