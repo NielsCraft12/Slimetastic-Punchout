@@ -38,6 +38,9 @@ public class MenuManager : MonoBehaviour
     private List<GameObject> playerSpawns = new List<GameObject>();
     public List<GameObject> slimes = new List<GameObject>();
 
+    public bool canStart = false;
+    private GameManager gameManager;
+
     // Initializes menu components and color options
     private void Awake()
     {
@@ -79,6 +82,8 @@ public class MenuManager : MonoBehaviour
 
         // Initialize player references
         GetPlayers();
+
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Finds and stores references to all active MenuPlayer components
@@ -94,7 +99,7 @@ public class MenuManager : MonoBehaviour
         // Only proceed if there are at least 2 players
         if (menuPlayers != null && menuPlayers.Length > 0)
         {
-            bool canStart = true;
+            canStart = true;
 
             // Check if all players have indicated they are ready
             for (int i = 0; i < menuPlayers.Length; i++)
@@ -108,6 +113,8 @@ public class MenuManager : MonoBehaviour
             // If all players are ready, start the game
             if (canStart == true)
             {
+                gameManager.canStart = true;
+
                 canStart = false;
                 // Disable player selection controls
                 foreach (GameObject players in playerSelectors)
