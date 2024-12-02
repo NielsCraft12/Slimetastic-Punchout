@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TileCreator : MonoBehaviour
 {
@@ -8,7 +9,14 @@ public class TileCreator : MonoBehaviour
     GameObject tile;
 
     [SerializeField]
-    private int mapSize = 25;
+    private int mapSizeX = 3;
+    [SerializeField]
+    private int mapSizeY = 2;
+
+    [SerializeField]
+    int spaceX;
+    [SerializeField]
+    int spaceZ;
 
     private Transform groundTileChild;
 
@@ -16,11 +24,11 @@ public class TileCreator : MonoBehaviour
     {
         groundTileChild = GetComponentInChildren<Transform>();
 
-        for (int i = 0; i < mapSize; i++)
+        for (int i = 0; i < mapSizeX; i++)
         {
-            for (int j = 0; j < mapSize; j++)
+            for (int j = 0; j < mapSizeY; j++)
             {
-                Instantiate(tile, new Vector3(groundTileChild.position.x + i * 2, 0, groundTileChild.position.z + j * 2), Quaternion.identity, this.transform);
+                Instantiate(tile, new Vector3(groundTileChild.position.x + i * spaceX, 0, groundTileChild.position.z + j * spaceZ), Quaternion.identity, this.transform);
             }
         }
     }
