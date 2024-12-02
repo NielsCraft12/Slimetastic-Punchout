@@ -14,9 +14,9 @@ public class TileCreator : MonoBehaviour
     private int mapSizeY = 2;
 
     [SerializeField]
-    int spaceX;
+    float spaceX;
     [SerializeField]
-    int spaceZ;
+    float spaceZ;
 
     private Transform groundTileChild;
 
