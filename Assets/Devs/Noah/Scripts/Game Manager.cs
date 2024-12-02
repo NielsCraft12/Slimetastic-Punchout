@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -19,14 +17,19 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] playerArray;
 
+    public int[] playerScore;
+
     private PlayerInputManager playerInputManager;
 
-    private float gameTimer = 120f;
+    [SerializeField] private float gameTimer = 120f;
+
     private TextMeshProUGUI timerText;
 
     [SerializeField] private bool canStart = false;
 
     private Transform tileManager;
+
+    private bool canCalculate = true;
 
     private void Awake()
     {
@@ -50,12 +53,17 @@ public class GameManager : MonoBehaviour
 
         timerText = GameObject.Find("Timer Text").GetComponent<TextMeshProUGUI>();
 
-        tileManager = GameObject.Find("Tile Manager").GetComponent<Transform>();
+        tileManager = GameObject.Find("TileManager").GetComponent<Transform>();
+    }
+
+    private void Start()
+    {
+        playerScore = new int[4] {0, 0, 0, 0};
     }
 
     private void Update()
     {
-        if (canStart)
+        if (canStart && canCalculate)
         {
             if (gameTimer > 0f)
             {
@@ -66,11 +74,7 @@ public class GameManager : MonoBehaviour
                 CalculateWin();
             }
 
-            timerText.SetText(gameTimer.ToString());
-        }
-        else
-        {
-            timerText.SetText("");
+            timerText.SetText(Mathf.RoundToInt(gameTimer).ToString());
         }
     }
 
@@ -85,6 +89,11 @@ public class GameManager : MonoBehaviour
     public void PlayerJoin()
     {
         playerArray = GameObject.FindGameObjectsWithTag("Player");
+
+        for(int i = 0; i < playerArray.Length; i++)
+        {
+            playerArray[i].GetComponent<TileColorChanger>().playerNum = i;
+        }
     }
 
     public void PlayerLeave()
@@ -94,9 +103,22 @@ public class GameManager : MonoBehaviour
 
     private void CalculateWin()
     {
-        foreach(Transform _child in tileManager)
+        canCalculate = false;
+
+        Tile[] tiles = GameObject.FindObjectsOfType<Tile>();
+
+        for(int i = 0; i < tiles.Length; i++)
         {
             
+            if(tiles[i].GetComponent<Tile>().lastPlayer >= 0)
+            {
+                Debug.Log(tiles[i].GetComponent<Tile>().lastPlayer);
+                playerScore[tiles[i].GetComponent<Tile>().lastPlayer]+= 1;
+            }
         }
+
+        
+
+        timerText.SetText("frltne");
     }
 }
