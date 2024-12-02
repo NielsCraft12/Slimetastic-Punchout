@@ -25,9 +25,7 @@ public class GameManager : MonoBehaviour
 
     private TextMeshProUGUI timerText;
 
-    [SerializeField] private bool canStart = false;
-
-    private Transform tileManager;
+    public bool canStart = false;
 
     private bool canCalculate = true;
 
@@ -52,13 +50,13 @@ public class GameManager : MonoBehaviour
         currentSceneName = currentScene.name;
 
         timerText = GameObject.Find("Timer Text").GetComponent<TextMeshProUGUI>();
-
-        tileManager = GameObject.Find("TileManager").GetComponent<Transform>();
     }
 
     private void Start()
     {
         playerScore = new int[4] {0, 0, 0, 0};
+
+        timerText.SetText("");
     }
 
     private void Update()
@@ -68,13 +66,12 @@ public class GameManager : MonoBehaviour
             if (gameTimer > 0f)
             {
                 gameTimer -= Time.deltaTime;
+                timerText.SetText(Mathf.RoundToInt(gameTimer).ToString());
             }
             else
             {
                 CalculateWin();
             }
-
-            timerText.SetText(Mathf.RoundToInt(gameTimer).ToString());
         }
     }
 
@@ -117,8 +114,24 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        
+        int _winScore = Mathf.Max(playerScore);
 
-        timerText.SetText("frltne");
+        int _winner;
+
+        for (int i = 0; i < playerScore.Length; i++)
+        {
+            if (playerScore[i] == _winScore)
+            {
+                _winner = i;
+                GameObject _winnerObject = playerArray[i].gameObject;
+                TileColorChanger _winnerTileColorChanger = _winnerObject.GetComponent<TileColorChanger>();
+
+                timerText.SetText("Player " + _winner.ToString() + " won");
+                timerText.color = _winnerTileColorChanger.colors[_winnerTileColorChanger.colorSelected];
+                timerText.alpha = 255;
+                timerText.outlineColor = Color.black;
+                timerText.outlineWidth = 0.25f;
+            }
+        }
     }
 }
