@@ -269,6 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c46267b099865674b91bb1579268745b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverSoundName: hoverSound
+  clickSoundName: clickSound
 --- !u!1 &318653389
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,6 +866,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847779995}
   m_CullTransparentMesh: 1
+--- !u!1 &1333570672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1333570674}
+  - component: {fileID: 1333570673}
+  m_Layer: 0
+  m_Name: soundmanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1333570673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333570672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca8f7f1175256be4bb79139eba825361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 0}
+  sounds:
+  - name: BackgroundMusic
+    clip: {fileID: 8300000, guid: 87765b0adf0168c4dbb026e3ecc21665, type: 3}
+    volume: 0.5
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: hoverSound
+    clip: {fileID: 8300000, guid: d403df61f7167034c87a2b763b148b9d, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  - name: clickSound
+    clip: {fileID: 8300000, guid: e8a87ce8239261e438a40ff653149a04, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+--- !u!4 &1333570674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333570672}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1611985001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,7 +1349,7 @@ Transform:
   m_GameObject: {fileID: 2016729881}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1471,6 +1546,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c46267b099865674b91bb1579268745b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverSoundName: hoverSound
+  clickSoundName: clickSound
 --- !u!1 &2042398124
 GameObject:
   m_ObjectHideFlags: 0
@@ -1693,6 +1770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c46267b099865674b91bb1579268745b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverSoundName: hoverSound
+  clickSoundName: clickSound
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1701,3 +1780,4 @@ SceneRoots:
   - {fileID: 428704142}
   - {fileID: 1732304418}
   - {fileID: 1812252010}
+  - {fileID: 1333570674}
