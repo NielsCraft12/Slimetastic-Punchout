@@ -17,7 +17,7 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         //Set the current cam
-        currentCam = joinCam;
+        currentCam = mainCam;
         currentCam.Priority = 100;
     }
 

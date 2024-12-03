@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI timerText;
 
     public bool canStart = false;
+    public bool isPerformingWin = false;
 
     private bool canCalculate = true;
 
@@ -101,6 +102,7 @@ public class GameManager : MonoBehaviour
     private void CalculateWin()
     {
         canCalculate = false;
+        isPerformingWin = true;
 
         Tile[] tiles = GameObject.FindObjectsOfType<Tile>();
 
@@ -123,6 +125,7 @@ public class GameManager : MonoBehaviour
             if (playerScore[i] == _winScore)
             {
                 _winner = i;
+                Debug.Log(i);
                 GameObject _winnerObject = playerArray[i].gameObject;
                 TileColorChanger _winnerTileColorChanger = _winnerObject.GetComponent<TileColorChanger>();
 
@@ -131,6 +134,21 @@ public class GameManager : MonoBehaviour
                 timerText.alpha = 255;
                 timerText.outlineColor = Color.black;
                 timerText.outlineWidth = 0.25f;
+
+                // Win animation
+                /*
+                Animator _winAnimator = playerArray[i].GetComponentInChildren<Animator>();
+                _winAnimator.SetBool("IsPerformingWin", true);
+                _winAnimator.SetInteger("RandomWinAnimation", Random.Range(0,1));
+                */
+            }
+            else
+            {
+                // Win animation
+                /*Animator _winAnimator = playerArray[i].GetComponentInChildren<Animator>();
+                _winAnimator.SetBool("IsPerformingWin", true);
+                _winAnimator.SetInteger("RandomWinAnimation", Random.Range(0,1));
+                */
             }
         }
     }
