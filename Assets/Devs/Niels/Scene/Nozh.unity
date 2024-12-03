@@ -52941,7 +52941,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerArray: []
   playerScore: 
-  gameTimer: 15
+  gameTimer: 5
   canStart: 0
   isPerformingWin: 0
 --- !u!4 &1743362550
