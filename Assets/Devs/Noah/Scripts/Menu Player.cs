@@ -72,10 +72,6 @@ public class MenuPlayer : MonoBehaviour
         transform.SetParent(menuManager.playerSelections[0].transform, false);
 
         menuManager.slimes.Add(transform.GetChild(0).gameObject);
-        // transform.GetChild(0).GetComponent<PlayerInput>().enabled = false;
-        // transform.GetChild(0).GetComponent<TileColorChanger>().enabled = false;
-        // transform.GetChild(0).GetComponent<PlayerController>().enabled = false;
-        // transform.GetChild(0).GetComponent<PlayerAttack>().enabled = false;
         tileColorChanger = transform.GetChild(0).GetComponent<TileColorChanger>();
         PlayablePlayer = transform.GetChild(0).gameObject;
         transform.GetChild(0).transform.SetParent(menuManager.playersParent.transform, false);

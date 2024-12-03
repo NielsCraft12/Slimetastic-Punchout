@@ -3,14 +3,19 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// Manages all audio playback in the game using a singleton pattern
 public class AudioManager : MonoBehaviour
 {
+    /// Singleton instance of the AudioManager
     public static AudioManager instance;
 
+    /// Audio mixer group for controlling audio output
     public AudioMixerGroup mixerGroup;
 
+    /// Array of Sound objects containing all available audio clips
     public Sound[] sounds;
 
+    /// Initializes the AudioManager and sets up audio sources for all sounds
 
     void Awake()
     {
@@ -34,6 +39,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// Plays the specified sound with randomized volume and pitch variations
+    /// <param name="sound">Name of the sound to play</param>
     public void Play(string sound)
     {
         Sound s = Array.Find(sounds, item => item.name == sound);
@@ -49,6 +56,8 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
+    /// Stops the specified sound from playing
+    /// <param name="sound">Name of the sound to stop</param>
     public void Stop(string sound)
     {
         Sound s = Array.Find(sounds, item => item.name == sound);
@@ -61,6 +70,8 @@ public class AudioManager : MonoBehaviour
         s.source.Stop();
     }
 
+    /// Stops all currently playing sounds
+
     public void StopAllSounds()
     {
         foreach (Sound s in sounds)
@@ -69,6 +80,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// Checks if a specific sound is currently playing
+    /// <param name="sound">Name of the sound to check</param>
+    /// <returns>True if the sound is playing, false otherwise</returns>
     public bool IsPlaying(string sound)
     {
         Sound s = Array.Find(sounds, item => item.name == sound);
@@ -80,5 +94,4 @@ public class AudioManager : MonoBehaviour
 
         return s.source.isPlaying;
     }
-
 }
