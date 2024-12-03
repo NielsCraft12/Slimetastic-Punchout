@@ -27,8 +27,10 @@ public class GameManager : MonoBehaviour
 
     public bool canStart = false;
     public bool isPerformingWin = false;
-
     private bool canCalculate = true;
+    private bool initializedPlayerScoreSize = false;
+
+
 
     private void Awake()
     {
@@ -55,13 +57,21 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        playerScore = new int[4] {0, 0, 0, 0};
+        
 
         timerText.SetText("");
     }
 
     private void Update()
     {
+        if (canStart && !initializedPlayerScoreSize)
+        {
+            playerScore = new int[playerArray.Length];
+            initializedPlayerScoreSize = true;
+        }
+
+        
+
         if (canStart && canCalculate)
         {
             if (gameTimer > 0f)
@@ -102,16 +112,13 @@ public class GameManager : MonoBehaviour
     private void CalculateWin()
     {
         canCalculate = false;
-        isPerformingWin = true;
 
         Tile[] tiles = GameObject.FindObjectsOfType<Tile>();
 
         for(int i = 0; i < tiles.Length; i++)
         {
-            
             if(tiles[i].GetComponent<Tile>().lastPlayer >= 0)
             {
-                Debug.Log(tiles[i].GetComponent<Tile>().lastPlayer);
                 playerScore[tiles[i].GetComponent<Tile>().lastPlayer]+= 1;
             }
         }
@@ -125,7 +132,6 @@ public class GameManager : MonoBehaviour
             if (playerScore[i] == _winScore)
             {
                 _winner = i;
-                Debug.Log(i);
                 GameObject _winnerObject = playerArray[i].gameObject;
                 TileColorChanger _winnerTileColorChanger = _winnerObject.GetComponent<TileColorChanger>();
 
@@ -134,22 +140,8 @@ public class GameManager : MonoBehaviour
                 timerText.alpha = 255;
                 timerText.outlineColor = Color.black;
                 timerText.outlineWidth = 0.25f;
-
-                // Win animation
-                /*
-                Animator _winAnimator = playerArray[i].GetComponentInChildren<Animator>();
-                _winAnimator.SetBool("IsPerformingWin", true);
-                _winAnimator.SetInteger("RandomWinAnimation", Random.Range(0,1));
-                */
             }
-            else
-            {
-                // Win animation
-                /*Animator _winAnimator = playerArray[i].GetComponentInChildren<Animator>();
-                _winAnimator.SetBool("IsPerformingWin", true);
-                _winAnimator.SetInteger("RandomWinAnimation", Random.Range(0,1));
-                */
-            }
-        }
+        }   
+        
     }
 }
