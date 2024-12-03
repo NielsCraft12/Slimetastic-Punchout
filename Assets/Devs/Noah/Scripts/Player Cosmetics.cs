@@ -8,6 +8,9 @@ public class PlayerCosmetics : MonoBehaviour
 {
     [SerializeField] private List<GameObject> cosmeticModels = new List<GameObject>(); // The list where all the cosmetic models will be in
 
+
+    public int cosmeticIndex = 0;
+
     public enum Cosmetics
     {
         None,
@@ -72,6 +75,46 @@ public class PlayerCosmetics : MonoBehaviour
                 SetCosmetic("None");
                 break;
         }
+
+
+
+        // switch (cosmeticIndex)
+        // {
+        //     case 0:
+        //         SetCosmetic("None");
+        //         break;
+
+        //     case 1:
+        //         SetCosmetic("P_Hand Axe");
+        //         break;
+
+        //     case 2:
+        //         SetCosmetic("P_Fez");
+        //         break;
+
+        //     case 3:
+        //         SetCosmetic("P_Halo");
+        //         break;
+        //     case 4:
+        //         SetCosmetic("P_Party hat");
+        //         break;
+        //     case 5:
+        //         SetCosmetic("P_Top hat with horns");
+        //         break;
+        //     case 6:
+        //         SetCosmetic("P_Top Hat");
+        //         break;
+        //     case 7:
+        //         SetCosmetic("P_Traffic cone");
+        //         break;
+        //     case 8:
+        //         SetCosmetic("Bootleg");
+        //         break;
+
+        //     default:
+        //         SetCosmetic("None");
+        //         break;
+        // }
     }
 
     private void SetCosmetic(string _cosmetic)

@@ -42,6 +42,9 @@ public class MenuPlayer : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI ReadyText;
     public bool isReady;
+    [SerializeField]
+    private GameObject PlayablePlayer;
+
 
     private TileColorChanger tileColorChanger;
 
@@ -64,6 +67,8 @@ public class MenuPlayer : MonoBehaviour
         // Add this player selector to the MenuManager
         menuManager.playerSelectors.Add(this.gameObject);
         // Set the parent of this transform to the first player selection
+
+
         transform.SetParent(menuManager.playerSelections[0].transform, false);
 
         menuManager.slimes.Add(transform.GetChild(0).gameObject);
@@ -72,6 +77,7 @@ public class MenuPlayer : MonoBehaviour
         // transform.GetChild(0).GetComponent<PlayerController>().enabled = false;
         // transform.GetChild(0).GetComponent<PlayerAttack>().enabled = false;
         tileColorChanger = transform.GetChild(0).GetComponent<TileColorChanger>();
+        PlayablePlayer = transform.GetChild(0).gameObject;
         transform.GetChild(0).transform.SetParent(menuManager.playersParent.transform, false);
 
         // Add debug logs
@@ -399,6 +405,9 @@ public class MenuPlayer : MonoBehaviour
         // Update the player's cosmetic selection
         PlayerCosmetics playerCosmetics = cosmeticParent.GetComponent<PlayerCosmetics>();
         playerCosmetics.cosmetic = (PlayerCosmetics.Cosmetics)cosmeticSelected;
+        PlayerCosmetics playerCosmetics1 = PlayablePlayer.transform.GetChild(0).GetComponent<PlayerCosmetics>();
+        //playerCosmetics1.cosmeticIndex = cosmeticSelected;
+        playerCosmetics1.cosmetic = (PlayerCosmetics.Cosmetics)cosmeticSelected;
     }
 
     private void UpdateReadyText()
