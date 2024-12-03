@@ -43,6 +43,8 @@ public class MenuPlayer : MonoBehaviour
     private TextMeshProUGUI ReadyText;
     public bool isReady;
 
+    private TileColorChanger tileColorChanger;
+
     private void Awake()
     {
         // Initialize components and setup the player menu
@@ -69,6 +71,7 @@ public class MenuPlayer : MonoBehaviour
         // transform.GetChild(0).GetComponent<TileColorChanger>().enabled = false;
         // transform.GetChild(0).GetComponent<PlayerController>().enabled = false;
         // transform.GetChild(0).GetComponent<PlayerAttack>().enabled = false;
+        tileColorChanger = transform.GetChild(0).GetComponent<TileColorChanger>();
         transform.GetChild(0).transform.SetParent(menuManager.playersParent.transform, false);
 
         // Add debug logs
@@ -381,6 +384,14 @@ public class MenuPlayer : MonoBehaviour
         images[1].GetComponent<Image>().color = menuManager.colors[colorSelected];
         PlayerBody.GetComponent<Renderer>().material = menuManager.playerColors[colorSelected];
         PlayerEyes.GetComponent<Renderer>().material = menuManager.playerColors[colorSelected];
+
+        // Update TileColorChanger's selected color
+        if (tileColorChanger != null)
+        {
+            tileColorChanger.colorSelected = colorSelected;
+            tileColorChanger.playerColors = menuManager.playerColors;
+            tileColorChanger.colors = menuManager.colors;
+        }
     }
 
     void UpdateCosmetic()
