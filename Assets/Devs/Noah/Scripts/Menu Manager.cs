@@ -59,25 +59,25 @@ public class MenuManager : MonoBehaviour
         {
             // Each color is normalized by dividing by 255 to get proper RGB values
             //Red
-            new Color(233 / 255.0f, 18 / 255.0f, 18 / 255.0f, 1),
+            new Color(255 / 255.0f, 116 / 255.0f, 108 / 255.0f, 1),
             //Blue
-            new Color(100 / 255.0f, 74 / 255.0f, 255 / 255.0f, 1),
+            new Color(179 / 255.0f, 235 / 255.0f, 242 / 255.0f, 1),
             // Brown
-            new Color(187 / 255.0f, 113 / 255.0f, 81 / 255.0f, 1),
+            new Color(104 / 255.0f, 183 / 255.0f, 156 / 255.0f, 1),
             // Cyan
-            new Color(14 / 255.0f, 200 / 255.0f, 199 / 255.0f, 1),
+            new Color(183 / 255.0f, 255 / 255.0f, 250 / 255.0f, 1),
             // Gray
-            new Color(113 / 255.0f, 113 / 255.0f, 113 / 255.0f, 1),
+            new Color(207 / 255.0f, 207 / 255.0f, 196 / 255.0f, 1),
             // Green
-            new Color(76 / 255.0f, 207 / 255.0f, 16 / 255.0f, 1),
+            new Color(128 / 255.0f, 239 / 255.0f, 128 / 255.0f, 1),
             // Orange
-            new Color(230 / 255.0f, 94 / 255.0f, 20 / 255.0f, 1),
+            new Color(255 / 255.0f, 192 / 255.0f, 103 / 255.0f, 1),
             // Pink
-            new Color(218 / 255.0f, 13 / 255.0f, 149 / 255.0f, 1),
+            new Color(255 / 255.0f, 197 / 255.0f, 211 / 255.0f, 1),
             // Purple
-            new Color(142 / 255.0f, 17 / 255.0f, 217 / 255.0f, 1),
+            new Color(195 / 255.0f, 177 / 255.0f, 255 / 255.0f, 1),
             // Yellow
-            new Color(231 / 255.0f, 216 / 255.0f, 20 / 255.0f, 1)
+            new Color(255 / 255.0f, 238 / 255.0f, 140 / 255.0f, 1)
         };
 
         // Initialize player references
