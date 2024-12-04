@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
             if(tiles[i].GetComponent<Tile>().lastPlayer >= 0)
             {
                 playerScore[tiles[i].GetComponent<Tile>().lastPlayer]+= 1;
+                
             }
         }
 
@@ -135,7 +136,7 @@ public class GameManager : MonoBehaviour
                 GameObject _winnerObject = playerArray[i].gameObject;
                 TileColorChanger _winnerTileColorChanger = _winnerObject.GetComponent<TileColorChanger>();
 
-                timerText.SetText("Player " + _winner.ToString() + " won");
+                timerText.SetText("Player " + (_winner + 1).ToString() + " won");
                 timerText.color = _winnerTileColorChanger.colors[_winnerTileColorChanger.colorSelected];
                 timerText.alpha = 255;
                 timerText.outlineColor = Color.black;
