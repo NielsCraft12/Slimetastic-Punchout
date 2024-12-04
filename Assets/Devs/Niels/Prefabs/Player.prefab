@@ -87,6 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cosmeticModels: []
+  cosmeticIndex: 0
   cosmetic: 3
 --- !u!1 &7263951232624388738
 GameObject:
@@ -186,6 +187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6376a7c28033b44b2f8cc13e2f3845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackStrength: 7.5
+  knockbackDuration: 0.5
 --- !u!114 &5663928783947270000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,7 +570,7 @@ MonoBehaviour:
   seeThroughTextureUVSpace: 0
   seeThroughTextureScale: 1
   seeThroughChildrenSortingMode: 0
-  rmsCount: 4
+  rmsCount: 0
   hitFxInitialIntensity: 0
   hitFxMode: 0
   hitFxFadeOutDuration: 0.25
