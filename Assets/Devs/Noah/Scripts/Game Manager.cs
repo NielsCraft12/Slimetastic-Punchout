@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -131,61 +131,87 @@ public class GameManager : MonoBehaviour
         isPerformingWin = true;
 
         GameObject _stageScene = GameObject.Find("Stage Scene");
-
         Tile[] tiles = GameObject.FindObjectsOfType<Tile>();
 
-        for(int i = 0; i < tiles.Length; i++)
+        // Update player scores
+        for (int i = 0; i < tiles.Length; i++)
         {
-            if(tiles[i].GetComponent<Tile>().lastPlayer >= 0)
+            if (tiles[i].GetComponent<Tile>().lastPlayer >= 0)
             {
-                playerScore[tiles[i].GetComponent<Tile>().lastPlayer]+= 1;
+                playerScore[tiles[i].GetComponent<Tile>().lastPlayer] += 1;
             }
         }
 
-        int[] _tempScore = playerScore;
+        // Convert playerScore to a List and sort in descending order
+        List<int> sortedScores = new List<int>(playerScore);
+        sortedScores.Sort((a, b) => b.CompareTo(a));  // Sort in descending order
 
-        int _winScore = Mathf.Max(playerScore);
-
-        int _winner = -1;
-
-        GameObject _winnerObject;
-        TileColorChanger _winnerTileColorChanger;
-
-        for (int i = 0; i < _tempScore.Length; i++)
+        // Create a list to hold player indices in sorted order
+        List<int> sortedPlayerIndices = new List<int>();
+        foreach (int score in sortedScores)
         {
-            if (_tempScore[i] == _winScore)
+            for (int i = 0; i < playerScore.Length; i++)
             {
-                if (_winner == -1)
+                if (playerScore[i] == score && !sortedPlayerIndices.Contains(i))
                 {
-                    // Set winner
-                    _winner = i;
-
-                    _winnerObject = playerArray[i].gameObject;
-                    _winnerTileColorChanger = _winnerObject.GetComponent<TileColorChanger>(); 
-
-                    // Win text
-                    timerText.SetText("Player " + (_winner + 1).ToString() + " won");
-                    timerText.color = _winnerTileColorChanger.colors[_winnerTileColorChanger.colorSelected];
-                    timerText.alpha = 255;
-                    timerText.outlineColor = Color.black;
-                    timerText.outlineWidth = 0.25f;
-
-                    // Animations
-                    Animator _winnerAnimator = _winnerObject.GetComponentInChildren<Animator>();
-                    _winnerAnimator.SetInteger("RandomWinAnimation", Random.Range(1,2));
+                    sortedPlayerIndices.Add(i);
+                    break;
                 }
             }
+        }
 
-            // Set correct positions
-            foreach(Transform _child in _stageScene.transform)
+        // Set winner (1st place)
+        int _winner = sortedPlayerIndices[0];
+        GameObject _winnerObject = playerArray[_winner].gameObject;
+        TileColorChanger _winnerTileColorChanger = _winnerObject.GetComponent<TileColorChanger>();
+
+        // Win text
+        timerText.SetText("Player " + (_winner + 1).ToString() + " won");
+        timerText.color = _winnerTileColorChanger.colors[_winnerTileColorChanger.colorSelected];
+        timerText.alpha = 255;
+        timerText.outlineColor = Color.black;
+        timerText.outlineWidth = 0.25f;
+
+        // Animations for winner
+        Animator _winnerAnimator = _winnerObject.GetComponentInChildren<Animator>();
+        _winnerAnimator.SetInteger("RandomWinAnimation", Random.Range(1, 2));
+
+        // Set the winner's position (1st place)
+        foreach (Transform _child in _stageScene.transform)
+        {
+            if (_child.name == "1st Player Position")
             {
-                if (_child.name == "1st Player Position")
+                _winnerObject.transform.position = _child.transform.position;
+            }
+        }
+
+        // Set positions for 2nd, 3rd, and 4th place players
+        for (int i = 1; i < sortedPlayerIndices.Count && i < 4; i++)
+        {
+            int playerIndex = sortedPlayerIndices[i];
+            GameObject playerObject = playerArray[playerIndex].gameObject;
+
+            // Find the position name based on the place (2nd, 3rd, 4th)
+            string positionName = $"{(i + 1)}{GetSuffix(i + 1)} Player Position";
+            foreach (Transform _child in _stageScene.transform)
+            {
+                if (_child.name == positionName)
                 {
-                    
+                    playerObject.transform.position = _child.transform.position;
                 }
             }
         }
 
         cameraManager.ChangeCamera(cameraManager.mainCam, cameraManager.winCam);
     }
+
+    // Helper function to get the suffix for position numbers (1st, 2nd, 3rd, 4th)
+    private string GetSuffix(int number)
+    {
+        if (number == 1) return "st";
+        else if (number == 2) return "nd";
+        else if (number == 3) return "rd";
+        else return "th";
+    }
+
 }
