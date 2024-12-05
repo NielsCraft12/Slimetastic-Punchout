@@ -53,27 +53,26 @@ public class PlayerAttack : MonoBehaviour
             {
                 punchDamageCooldown -= Time.deltaTime;
 
-                // Debug ray visualization
-                Debug.DrawRay(transform.position, transform.forward * punchLength, Color.red);
-
                 RaycastHit hit;
-                // Use a bigger radius for better hit detection
-                if (Physics.SphereCast(transform.position, 1f, transform.forward, out hit, punchLength))
+
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, punchLength))
                 {
                     if (hit.transform.gameObject.CompareTag("Player"))
                     {
-                        // Calculate direction from puncher to target
-                        Vector3 knockbackDir = (hit.transform.position - transform.position).normalized;
-                        knockbackDir.y = 0; // Keep knockback horizontal
-                        hit.transform.gameObject.GetComponent<PlayerAttack>().HitKnockback(knockbackDuration, knockbackDir);
+                        raycastHit = hit;
+                        raycastHit.transform.gameObject.GetComponent<PlayerAttack>().HitKnockback(knockbackDuration, hitDirection);
                     }
                 }
             }
 
-            // Remove the knockback timer velocity reset
+            // Modified knockback handling
             if (knockbackTimer > 0)
             {
                 knockbackTimer -= Time.deltaTime;
+                if (knockbackTimer <= 0)
+                {
+                    rb.velocity = Vector3.zero; // Stop knockback when timer ends
+                }
             }
         }
     }
@@ -94,18 +93,18 @@ public class PlayerAttack : MonoBehaviour
         if (knockbackTimer <= 0)
         {
             knockbackTimer = _knockbackDuration;
-            Vector3 knockbackForce = _hitDirection * knockbackStrength + Vector3.up * knockbackStrength * 0.5f;
-            rb.AddForce(knockbackForce, ForceMode.Impulse);
+            rb.velocity = Vector3.zero;
+            rb.AddForce(_hitDirection * knockbackStrength, ForceMode.Impulse);
             playerController.SetKnockback(true);
+
+            // Start a coroutine to reset knockback state
+            StartCoroutine(ResetKnockback(_knockbackDuration));
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private IEnumerator ResetKnockback(float duration)
     {
-        if (collision.gameObject.CompareTag("Floor"))
-        {
-            knockbackTimer = 0;
-            playerController.SetKnockback(false);
-        }
+        yield return new WaitForSeconds(duration);
+        playerController.SetKnockback(false);
     }
 }

@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpForce;
 
+    [SerializeField]
+    private float airControlMultiplier = 0.5f; // Add this field - controls air movement strength
+
     private Vector2 moveDirection = Vector2.zero;
     public Vector2 lastMoveDirection = Vector2.zero;
     private bool isGrounded = true;
@@ -83,14 +86,15 @@ public class PlayerController : MonoBehaviour
                     moveSpeed -= Time.deltaTime * 20;
                 }
 
+                float currentSpeed = moveSpeed * (isGrounded ? 1f : airControlMultiplier);
                 // Maintain the vertical velocity to avoid interference with jumping
                 float yVelocity = rb.velocity.y;
 
                 // Apply the calculated movement direction and speed
                 rb.velocity = new Vector3(
-                    lastMoveDirection.x * moveSpeed,
+                    lastMoveDirection.x * currentSpeed,
                     yVelocity,
-                    lastMoveDirection.y * moveSpeed
+                    lastMoveDirection.y * currentSpeed
                 );
             }
         }
