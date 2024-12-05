@@ -44,32 +44,36 @@ public class PlayerAttack : MonoBehaviour
         if (!gameManager.isPerformingWin)
         {
             // Handle cooldown for punches
-            if (cooldown > 0) 
+            if (cooldown > 0)
             {
                 cooldown -= Time.deltaTime;
             }
 
-            if (punchDamageCooldown > 0) 
+            if (punchDamageCooldown > 0)
             {
                 punchDamageCooldown -= Time.deltaTime;
 
-                RaycastHit hit;
+                // Debug ray visualization
+                Debug.DrawRay(transform.position, transform.forward * punchLength, Color.red);
 
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, punchLength))
+                RaycastHit hit;
+                // Use a bigger radius for better hit detection
+                if (Physics.SphereCast(transform.position, 1f, transform.forward, out hit, punchLength))
                 {
                     if (hit.transform.gameObject.CompareTag("Player"))
                     {
-                        raycastHit = hit;
-                        raycastHit.transform.gameObject.GetComponent<PlayerAttack>().HitKnockback(knockbackDuration, hitDirection);
+                        // Calculate direction from puncher to target
+                        Vector3 knockbackDir = (hit.transform.position - transform.position).normalized;
+                        knockbackDir.y = 0; // Keep knockback horizontal
+                        hit.transform.gameObject.GetComponent<PlayerAttack>().HitKnockback(knockbackDuration, knockbackDir);
                     }
                 }
             }
 
-            // Apply knockback if the timer is active
+            // Remove the knockback timer velocity reset
             if (knockbackTimer > 0)
             {
                 knockbackTimer -= Time.deltaTime;
-                rb.AddForce(knockbackForce, ForceMode.VelocityChange); // Apply force smoothly over time
             }
         }
     }
@@ -81,17 +85,27 @@ public class PlayerAttack : MonoBehaviour
             animator.SetTrigger("Punch");
             cooldown = cooldownValue;
             punchDamageCooldown = punchDamageCooldownValue;
-            hitDirection = new Vector3(playerController.lastMoveDirection.x, 0f, playerController.lastMoveDirection.y);
+            hitDirection = transform.forward; // Use actual forward direction instead of lastMoveDirection
         }
     }
 
     public void HitKnockback(float _knockbackDuration, Vector3 _hitDirection)
     {
-        // Initiate knockback only if it's not already in progress
         if (knockbackTimer <= 0)
         {
             knockbackTimer = _knockbackDuration;
-            knockbackForce = _hitDirection * knockbackStrength;
+            Vector3 knockbackForce = _hitDirection * knockbackStrength + Vector3.up * knockbackStrength * 0.5f;
+            rb.AddForce(knockbackForce, ForceMode.Impulse);
+            playerController.SetKnockback(true);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            knockbackTimer = 0;
+            playerController.SetKnockback(false);
         }
     }
 }
