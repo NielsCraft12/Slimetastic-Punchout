@@ -82,6 +82,11 @@ public class PlayerController : MonoBehaviour
                 lastMoveDirection.y * moveSpeed
             );
         }
+        else
+        {
+            rb.velocity = Vector3.zero;
+            transform.rotation = Quaternion.Euler(0,0,0);
+        }
     }
 
     public void OnJump(InputAction.CallbackContext _context)

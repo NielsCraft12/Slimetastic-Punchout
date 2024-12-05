@@ -28,42 +28,49 @@ public class PlayerAttack : MonoBehaviour
 
     private RaycastHit raycastHit;
 
+    private GameManager gameManager;
+
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
+
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
     {
-        // Handle cooldown for punches
-        if (cooldown > 0) 
+        if (!gameManager.isPerformingWin)
         {
-            cooldown -= Time.deltaTime;
-        }
-
-        if (punchDamageCooldown > 0) 
-        {
-            punchDamageCooldown -= Time.deltaTime;
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, punchLength))
+            // Handle cooldown for punches
+            if (cooldown > 0) 
             {
-                if (hit.transform.gameObject.CompareTag("Player"))
+                cooldown -= Time.deltaTime;
+            }
+
+            if (punchDamageCooldown > 0) 
+            {
+                punchDamageCooldown -= Time.deltaTime;
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, punchLength))
                 {
-                    raycastHit = hit;
-                    raycastHit.transform.gameObject.GetComponent<PlayerAttack>().HitKnockback(knockbackDuration, hitDirection);
+                    if (hit.transform.gameObject.CompareTag("Player"))
+                    {
+                        raycastHit = hit;
+                        raycastHit.transform.gameObject.GetComponent<PlayerAttack>().HitKnockback(knockbackDuration, hitDirection);
+                    }
                 }
             }
-        }
 
-        // Apply knockback if the timer is active
-        if (knockbackTimer > 0)
-        {
-            knockbackTimer -= Time.deltaTime;
-            rb.AddForce(knockbackForce, ForceMode.VelocityChange); // Apply force smoothly over time
+            // Apply knockback if the timer is active
+            if (knockbackTimer > 0)
+            {
+                knockbackTimer -= Time.deltaTime;
+                rb.AddForce(knockbackForce, ForceMode.VelocityChange); // Apply force smoothly over time
+            }
         }
     }
 

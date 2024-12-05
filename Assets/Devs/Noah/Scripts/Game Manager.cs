@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -30,7 +33,9 @@ public class GameManager : MonoBehaviour
     private bool canCalculate = true;
     private bool initializedPlayerScoreSize = false;
 
+    private CameraManager cameraManager;
 
+    private GameObject mainMenuButton;
 
     private void Awake()
     {
@@ -53,12 +58,14 @@ public class GameManager : MonoBehaviour
         currentSceneName = currentScene.name;
 
         timerText = GameObject.Find("Timer Text").GetComponent<TextMeshProUGUI>();
+
+        cameraManager = FindObjectOfType<CameraManager>();
+
+        mainMenuButton = GameObject.Find("Main Menu Button");
     }
 
     private void Start()
     {
-        
-
         timerText.SetText("");
     }
 
@@ -83,6 +90,15 @@ public class GameManager : MonoBehaviour
             {
                 CalculateWin();
             }
+        }
+
+        if (isPerformingWin)
+        {
+            mainMenuButton.SetActive(true);
+        }
+        else
+        {
+            mainMenuButton.SetActive(false);
         }
     }
 
@@ -112,6 +128,9 @@ public class GameManager : MonoBehaviour
     private void CalculateWin()
     {
         canCalculate = false;
+        isPerformingWin = true;
+
+        GameObject _stageScene = GameObject.Find("Stage Scene");
 
         Tile[] tiles = GameObject.FindObjectsOfType<Tile>();
 
@@ -120,29 +139,53 @@ public class GameManager : MonoBehaviour
             if(tiles[i].GetComponent<Tile>().lastPlayer >= 0)
             {
                 playerScore[tiles[i].GetComponent<Tile>().lastPlayer]+= 1;
-                
             }
         }
 
+        int[] _tempScore = playerScore;
+
         int _winScore = Mathf.Max(playerScore);
 
-        int _winner;
+        int _winner = -1;
 
-        for (int i = 0; i < playerScore.Length; i++)
+        GameObject _winnerObject;
+        TileColorChanger _winnerTileColorChanger;
+
+        for (int i = 0; i < _tempScore.Length; i++)
         {
-            if (playerScore[i] == _winScore)
+            if (_tempScore[i] == _winScore)
             {
-                _winner = i;
-                GameObject _winnerObject = playerArray[i].gameObject;
-                TileColorChanger _winnerTileColorChanger = _winnerObject.GetComponent<TileColorChanger>();
+                if (_winner == -1)
+                {
+                    // Set winner
+                    _winner = i;
 
-                timerText.SetText("Player " + (_winner + 1).ToString() + " won");
-                timerText.color = _winnerTileColorChanger.colors[_winnerTileColorChanger.colorSelected];
-                timerText.alpha = 255;
-                timerText.outlineColor = Color.black;
-                timerText.outlineWidth = 0.25f;
+                    _winnerObject = playerArray[i].gameObject;
+                    _winnerTileColorChanger = _winnerObject.GetComponent<TileColorChanger>(); 
+
+                    // Win text
+                    timerText.SetText("Player " + (_winner + 1).ToString() + " won");
+                    timerText.color = _winnerTileColorChanger.colors[_winnerTileColorChanger.colorSelected];
+                    timerText.alpha = 255;
+                    timerText.outlineColor = Color.black;
+                    timerText.outlineWidth = 0.25f;
+
+                    // Animations
+                    Animator _winnerAnimator = _winnerObject.GetComponentInChildren<Animator>();
+                    _winnerAnimator.SetInteger("RandomWinAnimation", Random.Range(1,2));
+                }
             }
-        }   
-        
+
+            // Set correct positions
+            foreach(Transform _child in _stageScene.transform)
+            {
+                if (_child.name == "1st Player Position")
+                {
+                    
+                }
+            }
+        }
+
+        cameraManager.ChangeCamera(cameraManager.mainCam, cameraManager.winCam);
     }
 }
