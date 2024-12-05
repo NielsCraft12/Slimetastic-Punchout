@@ -292,6 +292,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: lantarenpaal
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9b5e66c5ed806a24baeec92e0adbd32b, type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
     - target: {fileID: 8351356600967678781, guid: 9b5e66c5ed806a24baeec92e0adbd32b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

@@ -173,7 +173,7 @@ MonoBehaviour:
   moveSpeed: 0
   maxSpeed: 20
   rotationSpeed: 10
-  jumpForce: 100
+  jumpForce: 5
   lastMoveDirection: {x: 0, y: 0}
 --- !u!114 &6102820388653831145
 MonoBehaviour:
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6376a7c28033b44b2f8cc13e2f3845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackStrength: 7.5
+  knockbackStrength: 50
   knockbackDuration: 0.5
 --- !u!114 &5663928783947270000
 MonoBehaviour:
@@ -570,7 +570,7 @@ MonoBehaviour:
   seeThroughTextureUVSpace: 0
   seeThroughTextureScale: 1
   seeThroughChildrenSortingMode: 0
-  rmsCount: 0
+  rmsCount: 4
   hitFxInitialIntensity: 0
   hitFxMode: 0
   hitFxFadeOutDuration: 0.25
