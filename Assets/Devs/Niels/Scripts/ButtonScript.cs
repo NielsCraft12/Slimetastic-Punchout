@@ -22,8 +22,11 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerClickHa
             button.onClick.AddListener(() => AudioManager.instance.Play(clickSoundName));
         }
 
-        // Start background music
-        AudioManager.instance.Play("BackgroundMusic");
+        // Start background music only if it's not already playing
+        if (!AudioManager.instance.IsPlaying("MenuMusic"))
+        {
+            AudioManager.instance.Play("MenuMusic");
+        }
     }
 
     /// Plays hover sound when pointer enters button area
@@ -44,6 +47,11 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerClickHa
     /// <param name="sceneName">Name of the scene to load</param>
     public void GoToScene(string sceneName)
     {
+        if (sceneName == "Play")
+        {
+            AudioManager.instance.Stop("MenuMusic");
+            AudioManager.instance.Play("BackgroundMusic");
+        };
         SceneManager.LoadScene(sceneName);
     }
 
