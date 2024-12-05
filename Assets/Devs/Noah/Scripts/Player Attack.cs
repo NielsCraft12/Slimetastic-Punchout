@@ -8,7 +8,8 @@ using UnityEngine.Rendering;
 public class PlayerAttack : MonoBehaviour
 {
     private float playerSize;
-    private float knockbackStrength = 1000f;
+    [SerializeField] private float knockbackStrength = 1000f;
+    [SerializeField] private float knockbackDuration = 0.5f; // How long knockback lasts
 
     private float cooldown = 0;
     private float cooldownValue = 1;
@@ -22,6 +23,10 @@ public class PlayerAttack : MonoBehaviour
     private PlayerController playerController;
 
     private Vector3 hitDirection;
+    private float knockbackTimer = 0f; // Tracks remaining knockback time
+    private Vector3 knockbackForce = Vector3.zero; // Tracks the knockback force to apply
+
+    private RaycastHit raycastHit;
 
     private void Awake()
     {
@@ -32,12 +37,13 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if (cooldown > 0) // When a player has punched
+        // Handle cooldown for punches
+        if (cooldown > 0) 
         {
             cooldown -= Time.deltaTime;
         }
 
-        if (punchDamageCooldown > 0) // If it's higher than 0 it will register punches with the glove
+        if (punchDamageCooldown > 0) 
         {
             punchDamageCooldown -= Time.deltaTime;
 
@@ -47,9 +53,17 @@ public class PlayerAttack : MonoBehaviour
             {
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
-                    hit.rigidbody.AddForce(hitDirection * knockbackStrength, ForceMode.Impulse);
+                    raycastHit = hit;
+                    raycastHit.transform.gameObject.GetComponent<PlayerAttack>().HitKnockback(knockbackDuration, hitDirection);
                 }
             }
+        }
+
+        // Apply knockback if the timer is active
+        if (knockbackTimer > 0)
+        {
+            knockbackTimer -= Time.deltaTime;
+            rb.AddForce(knockbackForce, ForceMode.VelocityChange); // Apply force smoothly over time
         }
     }
 
@@ -61,6 +75,16 @@ public class PlayerAttack : MonoBehaviour
             cooldown = cooldownValue;
             punchDamageCooldown = punchDamageCooldownValue;
             hitDirection = new Vector3(playerController.lastMoveDirection.x, 0f, playerController.lastMoveDirection.y);
+        }
+    }
+
+    public void HitKnockback(float _knockbackDuration, Vector3 _hitDirection)
+    {
+        // Initiate knockback only if it's not already in progress
+        if (knockbackTimer <= 0)
+        {
+            knockbackTimer = _knockbackDuration;
+            knockbackForce = _hitDirection * knockbackStrength;
         }
     }
 }
