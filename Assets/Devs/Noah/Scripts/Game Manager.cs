@@ -1,13 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
-using System.Linq;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,6 +31,8 @@ public class GameManager : MonoBehaviour
     private CameraManager cameraManager;
 
     private GameObject mainMenuButton;
+
+    public GameObject Stage;
 
     private void Awake()
     {
@@ -77,7 +74,7 @@ public class GameManager : MonoBehaviour
             initializedPlayerScoreSize = true;
         }
 
-        
+
 
         if (canStart && canCalculate)
         {
@@ -105,7 +102,7 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(string _scene)
     {
         SceneManager.LoadScene(_scene);
-     
+
         currentScene = SceneManager.GetActiveScene();
         currentSceneName = currentScene.name;
     }
@@ -114,7 +111,7 @@ public class GameManager : MonoBehaviour
     {
         playerArray = GameObject.FindGameObjectsWithTag("Player");
 
-        for(int i = 0; i < playerArray.Length; i++)
+        for (int i = 0; i < playerArray.Length; i++)
         {
             playerArray[i].GetComponent<TileColorChanger>().playerNum = i;
         }
@@ -173,8 +170,8 @@ public class GameManager : MonoBehaviour
         timerText.outlineWidth = 0.25f;
 
         // Animations for winner
-        Animator _winnerAnimator = _winnerObject.GetComponentInChildren<Animator>();
-        _winnerAnimator.SetInteger("RandomWinAnimation", Random.Range(1, 2));
+        // Animator _winnerAnimator = _winnerObject.GetComponentInChildren<Animator>();
+        // _winnerAnimator.SetInteger("RandomWinAnimation", Random.Range(1, 2));
 
         // Set the winner's position (1st place)
         foreach (Transform _child in _stageScene.transform)
@@ -201,7 +198,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
+        Stage.SetActive(true);
         cameraManager.ChangeCamera(cameraManager.mainCam, cameraManager.winCam);
     }
 

@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using TreeEditor;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -33,7 +29,7 @@ public class CameraFollow : MonoBehaviour
         players = gameManager.playerArray;
 
         if (players.Length == 0)
-        { 
+        {
             return;
         }
 
@@ -78,7 +74,7 @@ public class CameraFollow : MonoBehaviour
 
         var _bounds = new Bounds(players[0].transform.position, Vector3.zero);
 
-        for (int i = 0; i < players.Length; i++) 
+        for (int i = 0; i < players.Length; i++)
         {
             _bounds.Encapsulate(players[i].transform.position);
         }

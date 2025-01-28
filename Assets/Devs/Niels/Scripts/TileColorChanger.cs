@@ -1,8 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class TileColorChanger : MonoBehaviour
@@ -15,7 +11,7 @@ public class TileColorChanger : MonoBehaviour
     public int colorSelected = 0;
     public List<Color> colors = new List<Color>();
     public List<Material> playerColors = new List<Material>();
-    
+
     public int playerNum;
 
     private int tilesClaimed;

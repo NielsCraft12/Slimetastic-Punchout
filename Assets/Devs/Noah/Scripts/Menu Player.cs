@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -191,7 +190,7 @@ public class MenuPlayer : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         // Reset color on exit
-        collision.GetComponent<Image>().color = Color.white;
+        collision.GetComponent<Image>().color = new Color(137f / 255f, 137f / 255f, 137f / 255f);
     }
 
     public void Select(InputAction.CallbackContext context)
@@ -412,11 +411,4 @@ public class MenuPlayer : MonoBehaviour
         ReadyText.text = "Not Ready...";
         ReadyText.color = Color.red;
     }
-
-
-
-
-
-
-
 }
